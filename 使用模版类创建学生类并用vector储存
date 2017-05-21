@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+#include<string>
+#include<vector>
+template<typename T1,typename T2>
+class Stu
+{public:
+    Stu(){}
+    Stu(T1 Id,T1 Name,T2 Age)
+    {
+        name=Name;
+        id=Id;
+        age=Age;
+    }
+    ~Stu(){}
+    void show()
+    {
+        cout<<"name=:"<<name<<endl;
+        cout<<"id="<<id<<endl;
+        cout<<"age="<<age<<endl;
+    }
+    //get();
+    void set()
+    {
+        cout<<"please enter the id="<<endl;
+        cin>>id;
+        cout<<"name="<<endl;
+        cin>>name;
+        cout<<"age="<<endl;
+        cin>>age;
+    }
+private:
+    T1 name;
+    T1 id;
+    T2 age;
+};
+/*template<typename T1,typename T2>
+void Stu<T1,T2>::Stu(T1 Id,T1 Name,T2 Age)
+{
+    strcpy(name,Name);
+    strcpy(id,Id);
+    age=Age;
+}
+template<typename T1,typename T2>
+int  Stu<T1,T2>::set(T1 Id,T1 Name,T2 Age)
+{
+    strcpy(name,Name);
+    strcpy(id,Id);
+    age=Age;
+}*/
+int main()
+{
+    vector<Stu<string,int> > v;
+    int i;
+    Stu<string,int> stu1("001","lee",18);
+    Stu<string,int> stu2;
+    v.push_back(stu1);
+    stu2.set();
+    v.push_back(stu2);
+    //stu1.show();
+    //stu2.show();
+    for(i=0;i<2;i++)
+        v[i].show();
+    return 0;
+}
