@@ -1,0 +1,329 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<conio.h>
+using namespace std;
+template<typename T1,typename T2>
+class Stu
+{
+public:
+    Stu();
+    Stu(T1 Name,T1 Id,T1 Sex,T2 Age,T1 Email,T1 Classes,T2 Score);
+    ~Stu(){}
+    T1 getid();
+    T1 getclasses();
+    void show();
+    T1 getname();
+    T2 getscore();
+    void change();
+private:
+    T1 name;
+    T1 id;
+    T2 age;
+    T1 classes;
+    T1 sex;
+    T1 email;
+    T2 score;
+
+
+};
+template<typename T1,typename T2>
+Stu<T1,T2>::Stu()
+{
+    cout<<"please enter the name:"<<endl;                                       /**************        异常处理        ****************/
+    cin>>name;
+    cout<<"the id:"<<endl;
+    cin>>id;
+    cout<<"the sex:"<<endl;
+    cin>>sex;
+    cout<<"the age:"<<endl;
+    cin>>age;
+        if(!cin)
+        {
+            throw 2;
+        }
+
+    cout<<"the email:"<<endl;
+    cin>>email;
+    cout<<"the class:"<<endl;
+    cin>>classes;
+    cout<<"the score:"<<endl;
+    cin>>score;
+        if(!cin)
+        {
+            throw 2;
+        }
+}
+template<typename T1,typename T2>
+Stu<T1,T2>::Stu(T1 Name,T1 Id,T1 Sex,T2 Age,T1 Email,T1 Classes,T2 Score)
+{
+    name=Name;
+    id=Id;
+    sex=Sex;
+    age=Age;
+    email=Email;
+    classes=Classes;
+    score=Score;
+}
+template<typename T1,typename T2>
+void Stu<T1,T2>::change()         /*********************        change           *******************/
+{
+
+    cout<<"please enter the new name:"<<endl;
+    cin>>name;
+    cout<<"the new id:"<<endl;
+    cin>>id;
+    cout<<"the new sex:"<<endl;
+    cin>>sex;
+    cout<<"the new age:"<<endl;
+    cin>>age;
+    if(!cin)
+        {
+            throw 2;
+        }                                                             /************         change中 throw             ******************/
+
+    cout<<"the new email:"<<endl;
+    cin>>email;
+    cout<<"the new class:"<<endl;
+    cin>>classes;
+    cout<<"the new score:"<<endl;
+    cin>>score;
+    if(!cin)
+        {
+            throw 2;
+        }
+    cout<<"/**  done  **/"<<endl;
+}
+template<typename T1,typename T2>
+void Stu<T1,T2>::show()               /*************        show           **********************/
+{
+    cout<<name<<"    "<<id<<"    "<<sex<<"    "<<age<<"    "<<email<<"    "<<classes<<"    "<<score<<endl;
+}
+template<typename T1,typename T2>
+T1 Stu<T1,T2>::getname()        /**********************        getname            ********************/
+{
+    return name;
+}
+template<typename T1,typename T2>
+T1 Stu<T1,T2>::getid()         /****************                 getid              ******************/
+{
+    return id;
+}
+template<typename T1,typename T2>
+T1 Stu<T1,T2>::getclasses()               /********************            getclasses          ******************/
+{
+    return classes;
+}
+template<typename T1,typename T2>
+T2 Stu<T1,T2>::getscore()            /*****************         getscore                *******************/
+{
+    return score;
+}
+                                                        /********************************       add              *******************/
+template<typename T1,typename T2>
+void add(vector<Stu<T1,T2> > &v)
+{
+    T1 name,id,sex,email,classes;
+    T2 score,age;
+        cout<<"enter the name:"<<endl;
+        cin>>name;
+        cout<<"the id:"<<endl;
+        cin>>id;
+        cout<<"the sex:"<<endl;
+        cin>>sex;
+        cout<<"the age:"<<endl;
+        cin>>age;
+        if(!cin)
+            throw 2;
+        cout<<"the email:"<<endl;
+        cin>>email;
+        cout<<"the class:"<<endl;
+        cin>>classes;
+        cout<<"the score:"<<endl;
+        cin>>score;
+        if(!cin)
+            throw 2;
+        Stu<string,int> stu(name,id,sex,age,email,classes,score);
+        v.push_back(stu);
+        cout<<"/****    added   ****/"<<endl;
+}
+                                                        /*********************         del             ************************/
+template<typename T1,typename T2>
+void del(vector<Stu<T1,T2> > &v)
+{
+    string Name;
+    int n=1;
+    typename vector<Stu<T1,T2> >::iterator p;
+    cout<<"enter the name :"<<endl;
+    cin>>Name;
+    for(p=v.begin();p!=v.end();p++)
+        {
+        if(p->getname()==Name)
+            {
+            v.erase(p);
+            cout<<"/***     deleted~    ***/"<<endl;
+            n=0;
+            break;
+            }
+    //if((v.rbegin()->getname())==Name)
+        //v.pop_back();
+        //else
+            //cout<<"/*****   can't find it    ******/"<<endl;
+        }
+    if(n)
+        cout<<"/*****   can't find it    ******/"<<endl;
+}
+                                                    /*******************             mod               *******************/
+template<typename T1,typename T2>
+void mod(vector<Stu<T1,T2> > &v)
+{
+    string Id;
+    int n=1;
+    typename vector<Stu<T1,T2> >::iterator p;
+    cout<<"enter the id :"<<endl;
+    cin>>Id;
+    for(p=v.begin();p!=v.end();p++)
+        {
+            if(p->getid()==Id)                                                    /*******  将来自change 的异常再传递给 main    *********/
+            {
+                cout<<"/*****    find it     *****/"<<endl;
+                p->change();n=0;
+            }
+        }
+    if(n)
+        cout<<"/*****   can't find it    ******/"<<endl;
+
+}
+                                                /******************           lookup by id          *****************/
+template<typename T1,typename T2>
+void lookupbyid(vector<Stu<T1,T2> > &v)
+{
+    string Id;
+    int n=1;
+    typename vector<Stu<T1,T2> >::iterator p;
+    cout<<"enter the id :"<<endl;
+    cin>>Id;
+    for(p=v.begin();p!=v.end();p++)
+        if(p->getid()==Id)
+            {
+                cout<<"/*****    find it     *****/"<<endl;
+                cout<<"姓名    学号    性别    年龄    email    班级    分数"<<endl;
+                p->show();n=0;
+            }
+    if(n)
+        cout<<"/*****   can't find it    ******/"<<endl;
+}
+                                            /*****************            lookup by class         *******************/
+template<typename T1,typename T2>
+void lookupbyclass(vector<Stu<T1,T2> > &v)
+{
+    string Classes;
+    int n=1;
+    typename vector<Stu<T1,T2> >::iterator p;
+    cout<<"enter the class :"<<endl;
+    cin>>Classes;
+    for(p=v.begin();p!=v.end();p++)
+        if(p->getclasses()==Classes)
+            {
+                cout<<"/*******    find it      **********/"<<endl;
+                cout<<"姓名    学号    性别    年龄    email    班级    分数"<<endl;
+                p->show();
+                n=0;
+            }
+    if(n)
+        cout<<"/*****   can't find it    ******/"<<endl;
+}
+                                                /***********************         lookup          ********************/
+template<typename T1,typename T2>
+void lookup(vector<Stu<T1,T2> > &v)
+{
+    char code;
+    cout<<"选择查询方式："<<endl;
+    cout<<"1.按学号查询"<<endl;
+    cout<<"2.按班级查询"<<endl;
+    cin>>code;
+    switch(code)
+    {
+        case '1':   lookupbyid(v);break;
+        case '2':   lookupbyclass(v);break;
+        default:    cout<<"错误的操作码"<<endl;break;
+    }
+}
+
+
+
+                                                /************************   show all    **************************/
+template<typename T1,typename T2>
+void showall(vector<Stu<T1,T2> > &v)
+{
+    typename vector<Stu<T1,T2> >::iterator p;
+    if(v.size()==0)
+        cout<<"暂时无数据"<<endl;
+    for(p=v.begin();p!=v.end();p++)
+        {
+        cout<<"姓名    学号    性别    年龄    email    班级    分数"<<endl;
+        p->show();
+        }
+}
+                                            /*********************       statistic         ****************************/
+template<typename T1,typename T2>
+void sta(vector<Stu<T1,T2> > &v)
+{
+    int n;
+    float totalscore=0.0;
+    float pass=0.0;
+    float total=0.0;
+    typename vector<Stu<T1,T2> >::iterator p;
+                                    /****************        计算总分，及格人数，总人数        *****************/
+    for(p=v.begin();p!=v.end();p++)
+    {
+        total++;
+        n=p->getscore();
+        totalscore+=(float)n;
+        if(n>59)
+            pass++;
+    }
+    cout<<"平均分为:"<<totalscore/total<<endl;
+    cout<<"及格率为:"<<100*pass/total<<"%"<<endl;
+}
+
+int main()
+{   char code;
+    vector<Stu<string,int> >v;
+    vector<Stu<string,int> >::iterator p;
+do
+    {
+    cout<<"/*******************************************************/"<<endl;
+    cout<<"/***********         选择操作         ******************/"<<endl;
+    cout<<"/***********          1.添加          ******************/"<<endl;
+    cout<<"/***********          2.删除          ******************/"<<endl;
+    cout<<"/***********          3.修改          ******************/"<<endl;
+    cout<<"/***********          4.查找          ******************/"<<endl;
+    cout<<"/***********          5.统计          ******************/"<<endl;
+    cout<<"/***********          6.显示全部      ******************/"<<endl;
+    cout<<"/***********          0.结束          ******************/"<<endl;
+    cout<<"/*******************************************************/"<<endl;
+
+    cin>>code;
+    switch(code){
+        case '1':  try{add(v);break;}catch(int){cout<<"输入有误，请重新输入"<<endl;
+                                                    cin.clear();cin.sync();break;}
+
+        case '2':   del(v);break;
+        case '3':   try{mod(v);break;} catch(int){cout<<"输入有误，请重新输入"<<endl;
+                                                    cin.clear();cin.sync();break;}
+        case '4':   lookup(v);break;
+        case '5':   sta(v);break;
+        case '6':   showall(v);break;
+        case '0':   return 0;
+        default:    cout<<"wrong code,enter agian!"<<endl;break;
+
+
+
+                }
+
+
+    }while(1);
+
+return 0;
+}
