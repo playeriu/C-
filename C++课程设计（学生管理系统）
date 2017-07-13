@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<string>
-#include<conio.h>
+#include<fstream>
 using namespace std;
 template<typename T1,typename T2>
 class Stu
@@ -16,6 +16,13 @@ public:
     T1 getname();
     T2 getscore();
     void change();
+    //friend ostream& operator<<(ostream& o,const Stu &p);
+
+    //friend istream& operator>>(istream& i,Stu &p);
+    //template<typename T1,typename T2>
+    //friend void read(vector<Stu<T1,T2> > &v);
+    //template<typename T1,typename T2>
+    //friend void save(vector<Stu<T1,T2> > &v);
 private:
     T1 name;
     T1 id;
@@ -30,7 +37,7 @@ private:
 template<typename T1,typename T2>
 Stu<T1,T2>::Stu()
 {
-    cout<<"please enter the name:"<<endl;                                       /**************        异常处理        ****************/
+    cout<<"please enter the name:"<<endl;
     cin>>name;
     cout<<"the id:"<<endl;
     cin>>id;
@@ -69,30 +76,30 @@ template<typename T1,typename T2>
 void Stu<T1,T2>::change()         /*********************        change           *******************/
 {
 
-    cout<<"please enter the new name:"<<endl;
+    cout<<"输入新姓名:"<<endl;
     cin>>name;
-    cout<<"the new id:"<<endl;
+    cout<<"新学号:"<<endl;
     cin>>id;
-    cout<<"the new sex:"<<endl;
+    cout<<"新性别:"<<endl;
     cin>>sex;
-    cout<<"the new age:"<<endl;
+    cout<<"新年龄:"<<endl;
     cin>>age;
     if(!cin)
         {
             throw 2;
-        }                                                             /************         change中 throw             ******************/
+        }
 
-    cout<<"the new email:"<<endl;
+    cout<<"新email:"<<endl;
     cin>>email;
-    cout<<"the new class:"<<endl;
+    cout<<"新班级:"<<endl;
     cin>>classes;
-    cout<<"the new score:"<<endl;
+    cout<<"新分数:"<<endl;
     cin>>score;
     if(!cin)
         {
             throw 2;
         }
-    cout<<"/**  done  **/"<<endl;
+    cout<<"/**  更改完成  **/"<<endl;
 }
 template<typename T1,typename T2>
 void Stu<T1,T2>::show()               /*************        show           **********************/
@@ -125,27 +132,27 @@ void add(vector<Stu<T1,T2> > &v)
 {
     T1 name,id,sex,email,classes;
     T2 score,age;
-        cout<<"enter the name:"<<endl;
+        cout<<"输入姓名:"<<endl;
         cin>>name;
-        cout<<"the id:"<<endl;
+        cout<<"学号:"<<endl;
         cin>>id;
-        cout<<"the sex:"<<endl;
+        cout<<"性别:"<<endl;
         cin>>sex;
-        cout<<"the age:"<<endl;
+        cout<<"年龄:"<<endl;
         cin>>age;
         if(!cin)
             throw 2;
-        cout<<"the email:"<<endl;
+        cout<<"email:"<<endl;
         cin>>email;
-        cout<<"the class:"<<endl;
+        cout<<"班级:"<<endl;
         cin>>classes;
-        cout<<"the score:"<<endl;
+        cout<<"分数:"<<endl;
         cin>>score;
         if(!cin)
             throw 2;
         Stu<string,int> stu(name,id,sex,age,email,classes,score);
         v.push_back(stu);
-        cout<<"/****    added   ****/"<<endl;
+        cout<<"/****    成功添加   ****/"<<endl;
 }
                                                         /*********************         del             ************************/
 template<typename T1,typename T2>
@@ -154,14 +161,14 @@ void del(vector<Stu<T1,T2> > &v)
     string Name;
     int n=1;
     typename vector<Stu<T1,T2> >::iterator p;
-    cout<<"enter the name :"<<endl;
+    cout<<"输入姓名 :"<<endl;
     cin>>Name;
     for(p=v.begin();p!=v.end();p++)
         {
         if(p->getname()==Name)
             {
             v.erase(p);
-            cout<<"/***     deleted~    ***/"<<endl;
+            cout<<"/***     成功删除~    ***/"<<endl;
             n=0;
             break;
             }
@@ -171,7 +178,7 @@ void del(vector<Stu<T1,T2> > &v)
             //cout<<"/*****   can't find it    ******/"<<endl;
         }
     if(n)
-        cout<<"/*****   can't find it    ******/"<<endl;
+        cout<<"/*****   查无此人    ******/"<<endl;
 }
                                                     /*******************             mod               *******************/
 template<typename T1,typename T2>
@@ -184,14 +191,14 @@ void mod(vector<Stu<T1,T2> > &v)
     cin>>Id;
     for(p=v.begin();p!=v.end();p++)
         {
-            if(p->getid()==Id)                                                    /*******  将来自change 的异常再传递给 main    *********/
+            if(p->getid()==Id)
             {
                 cout<<"/*****    find it     *****/"<<endl;
                 p->change();n=0;
             }
         }
     if(n)
-        cout<<"/*****   can't find it    ******/"<<endl;
+        cout<<"/*****   查无此人    ******/"<<endl;
 
 }
                                                 /******************           lookup by id          *****************/
@@ -201,7 +208,7 @@ void lookupbyid(vector<Stu<T1,T2> > &v)
     string Id;
     int n=1;
     typename vector<Stu<T1,T2> >::iterator p;
-    cout<<"enter the id :"<<endl;
+    cout<<"输入学号 :"<<endl;
     cin>>Id;
     for(p=v.begin();p!=v.end();p++)
         if(p->getid()==Id)
@@ -211,7 +218,7 @@ void lookupbyid(vector<Stu<T1,T2> > &v)
                 p->show();n=0;
             }
     if(n)
-        cout<<"/*****   can't find it    ******/"<<endl;
+        cout<<"/*****    查无此人    ******/"<<endl;
 }
                                             /*****************            lookup by class         *******************/
 template<typename T1,typename T2>
@@ -220,7 +227,7 @@ void lookupbyclass(vector<Stu<T1,T2> > &v)
     string Classes;
     int n=1;
     typename vector<Stu<T1,T2> >::iterator p;
-    cout<<"enter the class :"<<endl;
+    cout<<"输入班级 :"<<endl;
     cin>>Classes;
     for(p=v.begin();p!=v.end();p++)
         if(p->getclasses()==Classes)
@@ -231,7 +238,7 @@ void lookupbyclass(vector<Stu<T1,T2> > &v)
                 n=0;
             }
     if(n)
-        cout<<"/*****   can't find it    ******/"<<endl;
+        cout<<"/*****   查无此人    ******/"<<endl;
 }
                                                 /***********************         lookup          ********************/
 template<typename T1,typename T2>
@@ -286,7 +293,38 @@ void sta(vector<Stu<T1,T2> > &v)
     cout<<"平均分为:"<<totalscore/total<<endl;
     cout<<"及格率为:"<<100*pass/total<<"%"<<endl;
 }
-
+/*template<typename T1,typename T2>
+istream& operator>>(istream& i,Stu<T1,T2> p)
+{
+    i>>p.name>>p.id>>p.sex>>p.age>>p.email>>p.classes>>p.score;
+    return i;
+}
+template<typename T1,typename T2>
+ostream& operator<<(ostream& o, const Stu<T1,T2> p)
+{
+    o<<p.name<<p.id<<p.sex<<p.age<<p.email<<p.classes<<p.score;
+    return o;
+}*/
+/*template<typename T1,typename T2>
+void read(vector<Stu<T1,T2> > &v)
+{
+    Stu<T1,T2> stu("no","no","no",0,"no","no",0);
+    ifstream file("Stu.dat");
+    while(!file.eof())
+    {
+    file>>stu.name>>stu.id>>stu.sex>>stu.age>>stu.email>>stu.classes>>stu.score;
+    v.push_back(stu);
+    }
+}
+template<typename T1,typename T2>
+void save(vector<Stu<T1,T2> > &v)
+{
+    ofstream OutFile("Stu.dat", ios::out|ios::binary );
+    typename vector<Stu<T1,T2> >::iterator p;
+    for(p=v.begin();p!=v.end();p++)
+    {OutFile<<p->name<<p->id<<p->sex<<p->age<<p->email<<p->classes<<p->score;}
+    OutFile.close();
+}*/
 int main()
 {   char code;
     vector<Stu<string,int> >v;
@@ -301,6 +339,8 @@ do
     cout<<"/***********          4.查找          ******************/"<<endl;
     cout<<"/***********          5.统计          ******************/"<<endl;
     cout<<"/***********          6.显示全部      ******************/"<<endl;
+   // cout<<"/***********          7.保存          ******************/"<<endl;
+    //cout<<"/***********          8.读取          ******************/"<<endl;
     cout<<"/***********          0.结束          ******************/"<<endl;
     cout<<"/*******************************************************/"<<endl;
 
@@ -315,8 +355,10 @@ do
         case '4':   lookup(v);break;
         case '5':   sta(v);break;
         case '6':   showall(v);break;
+        //case '7':   save(v);break;
+        //case '8':   read(v);break;
         case '0':   return 0;
-        default:    cout<<"wrong code,enter agian!"<<endl;break;
+        default:    cout<<"错误的操作码，请重新输入"<<endl;break;
 
 
 
@@ -327,3 +369,4 @@ do
 
 return 0;
 }
+
