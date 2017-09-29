@@ -65,7 +65,7 @@ void del(Per *per,int n)
     }
     if(j)
     {
-        cout<<"查无此人"<<endl;
+        cout<<"查询失败，查无此人"<<endl;
     }
     else
         cout<<"成功删除"<<endl;
